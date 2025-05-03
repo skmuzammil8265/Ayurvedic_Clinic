@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Management - Ayurveda Clinic</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="admin-dashboard">
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="slider.html"><i class="fas fa-images"></i> Slider Management</a></li>
+                    <li><a href="gallery.html" class="active"><i class="fas fa-camera"></i> Photo Gallery</a></li>
+                    <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>Gallery Management</h1>
+            </header>
+
+            <div class="content-section">
+                <div class="add-gallery-form">
+                    <h2>Add New Gallery Image</h2>
+                    <form id="addGalleryForm">
+                        <div class="form-group">
+                            <label for="galleryTitle">Image Title</label>
+                            <input type="text" id="galleryTitle" name="galleryTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="galleryImage">Image</label>
+                            <input type="file" id="galleryImage" name="galleryImage" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Add to Gallery</button>
+                    </form>
+                </div>
+
+                <div class="gallery-list">
+                    <h2>Current Gallery Images</h2>
+                    <div class="gallery-items" id="galleryItems">
+                        <!-- Gallery items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/admin.js"></script>
+    <script>
+        // Load existing gallery images
+        document.addEventListener('DOMContentLoaded', function() {
+            const gallery = JSON.parse(localStorage.getItem('gallery') || '[]');
+            const galleryItems = document.getElementById('galleryItems');
+            
+            if (galleryItems) {
+                galleryItems.innerHTML = '';
+                gallery.forEach((item, index) => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    galleryItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="gallery-info">
+                            <h3>${item.title}</h3>
+                            <button onclick="deleteGalleryItem(${index})" class="delete-btn">Delete</button>
+                        </div>
+                    `;
+                    galleryItems.appendChild(galleryItem);
+                });
+            }
+
+            // Handle form submission
+            const form = document.getElementById('addGalleryForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    addGalleryImage();
+                });
+            }
+        });
+
+        function deleteGalleryItem(index) {
+            if (confirm('Are you sure you want to delete this gallery image?')) {
+                const gallery = JSON.parse(localStorage.getItem('gallery') || '[]');
+                gallery.splice(index, 1);
+                localStorage.setItem('gallery', JSON.stringify(gallery));
+                window.location.reload();
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Ayurveda Clinic</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="admin-dashboard">
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="slider.html"><i class="fas fa-images"></i> Slider Management</a></li>
+                    <li><a href="gallery.html"><i class="fas fa-camera"></i> Photo Gallery</a></li>
+                    <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+                    <li><a href="settings.html" class="active"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>Settings</h1>
+            </header>
+
+            <div class="content-section">
+                <div class="settings-container">
+                    <div class="settings-section">
+                        <h2>Clinic Information</h2>
+                        <form id="clinicInfoForm">
+                            <div class="form-group">
+                                <label for="clinicName">Clinic Name</label>
+                                <input type="text" id="clinicName" name="clinicName" value="Ayurveda Clinic">
+                            </div>
+                            <div class="form-group">
+                                <label for="clinicAddress">Address</label>
+                                <textarea id="clinicAddress" name="clinicAddress">123 Ayurveda Street, Kerala, India</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="clinicPhone">Phone Number</label>
+                                <input type="tel" id="clinicPhone" name="clinicPhone" value="+91 1234567890">
+                            </div>
+                            <div class="form-group">
+                                <label for="clinicEmail">Email</label>
+                                <input type="email" id="clinicEmail" name="clinicEmail" value="info@ayurvedaclinic.com">
+                            </div>
+                            <button type="submit" class="submit-btn">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <div class="settings-section">
+                        <h2>Working Hours</h2>
+                        <form id="workingHoursForm">
+                            <div class="form-group">
+                                <label>Monday - Saturday</label>
+                                <div class="time-inputs">
+                                    <input type="time" id="weekdayStart" value="09:00">
+                                    <span>to</span>
+                                    <input type="time" id="weekdayEnd" value="19:00">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Sunday</label>
+                                <div class="time-inputs">
+                                    <input type="time" id="sundayStart" value="10:00">
+                                    <span>to</span>
+                                    <input type="time" id="sundayEnd" value="14:00">
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <div class="settings-section">
+                        <h2>Change Password</h2>
+                        <form id="changePasswordForm">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" name="currentPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" name="newPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                            </div>
+                            <button type="submit" class="submit-btn">Change Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved settings
+            const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+            
+            if (settings.clinicInfo) {
+                document.getElementById('clinicName').value = settings.clinicInfo.name || '';
+                document.getElementById('clinicAddress').value = settings.clinicInfo.address || '';
+                document.getElementById('clinicPhone').value = settings.clinicInfo.phone || '';
+                document.getElementById('clinicEmail').value = settings.clinicInfo.email || '';
+            }
+
+            if (settings.workingHours) {
+                document.getElementById('weekdayStart').value = settings.workingHours.weekdayStart || '09:00';
+                document.getElementById('weekdayEnd').value = settings.workingHours.weekdayEnd || '19:00';
+                document.getElementById('sundayStart').value = settings.workingHours.sundayStart || '10:00';
+                document.getElementById('sundayEnd').value = settings.workingHours.sundayEnd || '14:00';
+            }
+
+            // Handle form submissions
+            document.getElementById('clinicInfoForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+                settings.clinicInfo = {
+                    name: document.getElementById('clinicName').value,
+                    address: document.getElementById('clinicAddress').value,
+                    phone: document.getElementById('clinicPhone').value,
+                    email: document.getElementById('clinicEmail').value
+                };
+                localStorage.setItem('settings', JSON.stringify(settings));
+                alert('Clinic information updated successfully');
+            });
+
+            document.getElementById('workingHoursForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+                settings.workingHours = {
+                    weekdayStart: document.getElementById('weekdayStart').value,
+                    weekdayEnd: document.getElementById('weekdayEnd').value,
+                    sundayStart: document.getElementById('sundayStart').value,
+                    sundayEnd: document.getElementById('sundayEnd').value
+                };
+                localStorage.setItem('settings', JSON.stringify(settings));
+                alert('Working hours updated successfully');
+            });
+
+            document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                if (currentPassword !== 'admin123') {
+                    alert('Current password is incorrect');
+                    return;
+                }
+
+                if (newPassword !== confirmPassword) {
+                    alert('New passwords do not match');
+                    return;
+                }
+
+                // In a real application, this would be handled by a backend
+                alert('Password changed successfully');
+                document.getElementById('changePasswordForm').reset();
+            });
+        });
+    </script>
+</body>
+</html> 

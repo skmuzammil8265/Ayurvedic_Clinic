@@ -1,0 +1,97 @@
+/* Doctors Page Styles */
+.doctors-main {
+    padding-top: 100px;
+    min-height: calc(100vh - 300px);
+}
+
+.doctors-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.doctors-section h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+}
+
+.doctors-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.doctor-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    width: 350px;
+    transition: transform 0.3s ease;
+}
+
+.doctor-card:hover {
+    transform: translateY(-5px);
+}
+
+.doctor-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.doctor-info {
+    padding: 1.5rem;
+}
+
+.doctor-info h3 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.specialization {
+    color: #27ae60;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.experience {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.description {
+    color: #555;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.book-btn {
+    display: inline-block;
+    background-color: #27ae60;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.book-btn:hover {
+    background-color: #219653;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .doctors-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .doctor-card {
+        width: 100%;
+        max-width: 350px;
+    }
+} 
